@@ -1,0 +1,1850 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shalini & Abhinandan | Royal Wedding Celebration</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Great+Vibes&family=Montserrat:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        maroon: {
+                            800: '#1E3A60', // Twilight Sapphire Accent
+                            900: '#142742', // Royal Imperial Navy
+                            950: '#0B192C', // Deep Midnight (Replaced aggressive #38020A)
+                        },
+                        gold: {
+                            100: '#FFF9E6',
+                            200: '#F5E4B2',
+                            300: '#E5C158',
+                            400: '#D4AF37',
+                            500: '#B8860B',
+                            600: '#996F06',
+                        },
+                        ivory: {
+                            50: '#FFFEFA',
+                            100: '#FDFBF7',
+                            200: '#F7F0E4',
+                            300: '#EFE4D0',
+                        }
+                    },
+                    fontFamily: {
+                        cinzel: ['"Cinzel"', 'serif'],
+                        cormorant: ['"Cormorant Garamond"', 'serif'],
+                        script: ['"Great Vibes"', 'cursive'],
+                        sans: ['"Montserrat"', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Custom luxury aesthetics */
+        .gold-gradient-text {
+            background: linear-gradient(135deg, #FFE89E 0%, #D4AF37 50%, #996F06 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .gold-border-gradient {
+            border-image: linear-gradient(to bottom right, #D4AF37, #FFF5CC, #B8860B) 1;
+        }
+
+        .royal-pattern {
+            background-color: #FDFBF7;
+            background-image: radial-gradient(#D4AF37 0.75px, transparent 0.75px), radial-gradient(#D4AF37 0.75px, #FDFBF7 0.75px);
+            background-size: 30px 30px;
+            background-position: 0 0, 15px 15px;
+            background-opacity: 0.15;
+        }
+
+        .royal-maroon-pattern {
+            background-color: #0B192C;
+            background-image: radial-gradient(rgba(212, 175, 55, 0.18) 0.8px, transparent 0.8px);
+            background-size: 24px 24px;
+        }
+
+        /* Ornate Arch Frame */
+        .arch-frame {
+            border-top-left-radius: 50% 32%;
+            border-top-right-radius: 50% 32%;
+        }
+
+        /* Floating animations */
+        @keyframes subtle-float {
+
+            0%,
+            100% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-8px);
+            }
+        }
+
+        .animate-subtle-float {
+            animation: subtle-float 4s ease-in-out infinite;
+        }
+
+        /* Stamp / Wax seal pulse */
+        @keyframes seal-pulse {
+
+            0%,
+            100% {
+                transform: scale(1);
+                box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.4);
+            }
+
+            50% {
+                transform: scale(1.03);
+                box-shadow: 0 0 20px 6px rgba(212, 175, 55, 0.6);
+            }
+        }
+
+        .seal-glow {
+            animation: seal-pulse 2.4s infinite;
+        }
+
+        .zoom-img {
+            width: 100%;
+            display: block;
+            transition: transform 0.4s ease;
+            will-change: transform;
+        }
+
+        .zoom-img:hover {
+            transform: scale(1.02);
+        }
+    </style>
+</head>
+
+<body id="bodyRoot"
+    class="bg-[#FDFBF7] text-[#2C2018] font-sans antialiased selection:bg-gold-300 selection:text-maroon-950 overflow-x-hidden">
+
+    <!-- PUSHPAVRISHTI CANVAS (Falling Rose & Marigold Petals) -->
+    <canvas id="petalsCanvas" class="fixed inset-0 pointer-events-none z-30"></canvas>
+
+    <!-- FLOATING CONTROLS: AUDIO & PUSHPAVRISHTI TOGGLE -->
+    <div class="fixed bottom-6 right-6 z-50 flex items-center gap-2">
+        <!-- Floating Petals Toggle -->
+        <button id="petalsToggleBtn" onclick="togglePetals()"
+            class="flex items-center gap-2 px-3.5 py-3 bg-maroon-900/90 text-gold-200 border border-gold-400/60 rounded-full shadow-2xl backdrop-blur-md hover:bg-maroon-800 transition duration-300"
+            title="Toggle Festive Floral Shower">
+            <i class="fa-solid fa-spa text-gold-400"></i>
+            <span class="text-xs uppercase tracking-wider font-semibold font-cinzel hidden sm:inline">Petals</span>
+        </button>
+
+        <!-- Floating Ambient Music Toggle -->
+        <button id="musicToggleBtn" onclick="toggleAmbience()"
+            class="flex items-center gap-2.5 px-4 py-3 bg-maroon-900/90 text-gold-200 border border-gold-400/60 rounded-full shadow-2xl backdrop-blur-md hover:bg-maroon-800 transition duration-300">
+            <span id="musicIcon" class="text-gold-300"><i class="fa-solid fa-music"></i></span>
+            <span id="musicText" class="text-xs uppercase tracking-widest font-semibold font-cinzel">Play Shehnai</span>
+            <span id="musicVisualizer" class="hidden items-end gap-0.5 h-3 ml-0.5">
+                <span class="w-0.5 h-2 bg-gold-300 animate-pulse"></span>
+                <span class="w-0.5 h-3 bg-gold-400 animate-bounce"></span>
+                <span class="w-0.5 h-1.5 bg-gold-200 animate-pulse"></span>
+            </span>
+        </button>
+    </div>
+
+    <!-- VIRTUAL ENVELOPE MODAL (UNBOXING EXPERIENCE) -->
+    <div id="envelopeModal"
+        class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-maroon-950/80 backdrop-blur-md transition-opacity duration-700">
+        <div
+            class="relative w-full max-w-lg bg-[#FAF6EE] rounded-2xl p-8 sm:p-12 text-center border-2 border-gold-400 shadow-2xl">
+            <!-- Decorative corner motifs -->
+            <div class="absolute top-3 left-3 text-gold-500 text-xl"><i class="fa-solid fa-star-of-life opacity-70"></i>
+            </div>
+            <div class="absolute top-3 right-3 text-gold-500 text-xl"><i
+                    class="fa-solid fa-star-of-life opacity-70"></i></div>
+            <div class="absolute bottom-3 left-3 text-gold-500 text-xl"><i
+                    class="fa-solid fa-star-of-life opacity-70"></i></div>
+            <div class="absolute bottom-3 right-3 text-gold-500 text-xl"><i
+                    class="fa-solid fa-star-of-life opacity-70"></i></div>
+
+            <!-- Auspicious Invocation -->
+            <p class="font-cinzel text-xs md:text-sm tracking-[0.25em] text-gold-600 font-bold uppercase mb-1">
+                || श्री गणेशाय नमः ||
+            </p>
+            <p class="font-cormorant italic text-xs sm:text-sm text-stone-600 max-w-sm mx-auto mb-4 leading-relaxed">
+                “मङ्गलं भगवान् विष्णुर्मङ्गलं गरुडध्वजः। मङ्गलं पुण्डरीकाक्षो मङ्गलाय तनो हरिः॥”
+            </p>
+
+            <h3 class="font-cormorant text-2xl md:text-3xl text-maroon-900 font-semibold italic">
+                You are cordially invited to celebrate the wedding of
+            </h3>
+
+            <div class="my-6">
+                <span class="block font-cinzel text-2xl sm:text-3xl text-gold-600 font-bold tracking-wider">SHALINI &
+                    ABHINANDAN</span>
+                <span class="font-script text-3xl text-maroon-800 block -mt-1">Corbett, Uttarakhand</span>
+            </div>
+
+            <!-- Wax Seal Button -->
+            <div class="flex flex-col items-center justify-center my-6">
+                <button onclick="openInvitation()"
+                    class="seal-glow group relative w-24 h-24 rounded-full bg-gradient-to-br from-maroon-800 via-maroon-900 to-[#0B192C] border-4 border-gold-300 flex items-center justify-center shadow-2xl hover:scale-105 active:scale-95 transition-all">
+                    <div class="absolute inset-2 border border-gold-400/40 rounded-full pointer-events-none"></div>
+                    <div class="text-center">
+                        <span class="font-cinzel font-black text-2xl text-gold-300 tracking-tight block">A & S</span>
+                        <span
+                            class="text-[9px] uppercase tracking-widest text-gold-200 block -mt-1 font-sans">Open</span>
+                    </div>
+                </button>
+                <p class="text-xs uppercase tracking-widest font-semibold text-gold-600 mt-4 font-cinzel animate-pulse">
+                    Tap the Royal Seal to Enter
+                </p>
+            </div>
+
+            <p class="text-xs text-stone-500 tracking-wide font-sans">
+                February 15th & 16th, 2027 • Corbett Adventure Resort
+            </p>
+        </div>
+    </div>
+
+    <!-- MAIN NAVBAR -->
+    <header class="sticky top-0 z-40 bg-[#FDFBF7]/90 backdrop-blur-md border-b border-gold-300/40">
+        <div class="max-w-7xl mx-auto px-4 sm:px-8 py-3.5 flex items-center justify-between">
+            <a href="#" class="flex items-center gap-2 group">
+                <span
+                    class="w-10 h-10 rounded-full bg-maroon-900 text-gold-300 border border-gold-400 flex items-center justify-center font-cinzel font-bold text-sm tracking-wider shadow-md">
+                    A&S
+                </span>
+                <span class="font-cinzel text-maroon-900 font-bold text-sm tracking-wider hidden sm:inline">
+                    Shalini & Abhinandan
+                </span>
+            </a>
+
+            <nav
+                class="hidden md:flex items-center space-x-7 text-xs uppercase tracking-widest font-semibold text-stone-700">
+                <a href="#couple" class="hover:text-maroon-800 transition">The Couple</a>
+                <a href="#events" class="hover:text-maroon-800 transition">Events</a>
+                <a href="#wardrobe" class="hover:text-maroon-800 transition">Wardrobe</a>
+                <a href="#venue" class="hover:text-maroon-800 transition">Venue & Stay</a>
+                <a href="#concierge" class="hover:text-maroon-800 transition">Concierge</a>
+                <a href="#rsvp"
+                    class="px-4 py-2 rounded-full bg-maroon-800 text-gold-200 border border-gold-400 hover:bg-maroon-900 transition">RSVP</a>
+            </nav>
+
+            <a href="#rsvp"
+                class="md:hidden text-xs uppercase tracking-wider font-bold px-3 py-1.5 rounded-full bg-maroon-900 text-gold-200 border border-gold-400">
+                RSVP
+            </a>
+        </div>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section
+        class="relative min-h-[92vh] flex items-center justify-center pt-8 pb-16 px-4 bg-gradient-to-b from-[#F7F0E4] via-[#FDFBF7] to-[#F7F0E4] overflow-hidden">
+        <!-- Floating decorative mandala patterns in background -->
+        <div
+            class="absolute -top-24 -left-24 w-80 h-80 rounded-full border-[1.5px] border-gold-400/25 pointer-events-none animate-pulse">
+        </div>
+        <div
+            class="absolute -bottom-24 -right-24 w-96 h-96 rounded-full border-[1.5px] border-gold-400/25 pointer-events-none">
+        </div>
+
+        <div class="max-w-5xl mx-auto text-center relative z-10">
+            <!-- Auspicious Inscription -->
+            <div
+                class="inline-flex items-center justify-center gap-3 px-5 py-1.5 rounded-full bg-maroon-900/5 border border-gold-400/40 mb-6">
+                <i class="fa-solid fa-om text-gold-600 text-sm"></i>
+                <span class="font-cinzel text-xs md:text-sm tracking-[0.25em] font-bold text-maroon-900 uppercase">
+                    || Shree Ganeshay Namah ||
+                </span>
+                <i class="fa-solid fa-om text-gold-600 text-sm"></i>
+            </div>
+
+            <p class="font-cormorant italic text-lg sm:text-2xl text-stone-600 mb-2 font-medium">
+                With the divine blessings of our elders and family
+            </p>
+
+            <h1
+                class="font-cinzel text-4xl sm:text-6xl md:text-7xl font-bold text-maroon-950 tracking-tight leading-tight">
+                Shalini <br class="sm:hidden" />
+                <span class="font-script text-4xl sm:text-6xl md:text-7xl text-gold-600 font-normal mx-2">&</span>
+                Abhinandan
+            </h1>
+
+            <p
+                class="mt-4 font-cinzel text-xs sm:text-sm md:text-base tracking-[0.3em] uppercase text-stone-700 font-semibold">
+                Celebrate Our Sacred Destination Wedding In The Foothills Of Nainital
+            </p>
+
+            <!-- Hero Couple Image Display with Arch Frame -->
+            <div class="mt-10 mb-8 max-w-sm sm:max-w-md mx-auto relative group">
+                <div
+                    class="absolute -inset-3 bg-gradient-to-r from-gold-300 via-gold-400 to-gold-500 rounded-[38px] opacity-40 blur-md group-hover:opacity-60 transition duration-700">
+                </div>
+
+                <div class="relative bg-white p-3 rounded-[32px] border-2 border-gold-400 shadow-2xl">
+                    <div class="arch-frame overflow-hidden w-full h-[440px] sm:h-[480px] bg-stone-100 cursor-pointer"
+                        onclick="openLightbox('images/couple-hero.jpeg', 'Shalini Sharma & Abhinandan Singh • Forever Begins Here')"
+                        title="Click to view photograph">
+                        <img src="images/couple-hero.jpeg"
+                            alt="Shalini Sharma and Abhinandan Singh"
+                            class="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700"
+                            onerror="this.src='https://placehold.co/600x800/142742/E5C158?text=Shalini+%26+Abhinandan'" />
+                    </div>
+                    <div class="pt-3 pb-1 text-center flex items-center justify-center gap-2">
+                        <span class="font-script text-2xl text-maroon-900">Forever Begins Here</span>
+                        <span
+                            class="text-[10px] text-stone-400 font-sans uppercase tracking-wider opacity-0 group-hover:opacity-100 transition"><i
+                                class="fa-solid fa-expand text-gold-500"></i> View</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Key Date & Location Badges -->
+            <div class="flex flex-wrap items-center justify-center gap-4 sm:gap-8 text-stone-800 mt-6">
+                <div class="flex items-center gap-2 font-cinzel text-sm sm:text-base font-semibold">
+                    <i class="fa-regular fa-calendar text-gold-600"></i>
+                    <span>February 15 - 16, 2027</span>
+                </div>
+                <div class="hidden sm:block text-gold-400">•</div>
+                <div class="flex items-center gap-2 font-cinzel text-sm sm:text-base font-semibold">
+                    <i class="fa-solid fa-location-dot text-gold-600"></i>
+                    <span>Corbett Adventure Resort, Ramnagar</span>
+                </div>
+            </div>
+
+            <!-- Action buttons -->
+            <div class="mt-8 flex flex-wrap items-center justify-center gap-4">
+                <a href="#events"
+                    class="px-7 py-3 rounded-full bg-maroon-900 text-gold-200 border border-gold-400 shadow-lg hover:bg-maroon-800 transition duration-300 font-cinzel text-xs uppercase tracking-widest font-bold">
+                    View Celebration Schedule
+                </a>
+                <a href="#rsvp"
+                    class="px-7 py-3 rounded-full bg-white text-maroon-900 border border-gold-400/80 shadow-md hover:bg-gold-50 transition duration-300 font-cinzel text-xs uppercase tracking-widest font-bold">
+                    Send RSVP
+                </a>
+                <button type="button" onclick="addToCalendar('full')"
+                    class="px-5 py-3 rounded-full bg-gold-100 text-maroon-950 border border-gold-400 shadow-md hover:bg-gold-200 transition duration-300 font-cinzel text-xs uppercase tracking-wider font-bold flex items-center gap-2">
+                    <i class="fa-regular fa-calendar-plus text-gold-600"></i>
+                    Save to Calendar
+                </button>
+            </div>
+
+            <!-- Social & WhatsApp Quick Share Hub -->
+            <div class="mt-7 flex flex-wrap items-center justify-center gap-3">
+                <button type="button" onclick="copyHashtag()"
+                    class="group inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/90 border border-gold-300 shadow-sm text-xs font-semibold text-stone-700 hover:border-gold-500 hover:bg-gold-50 transition">
+                    <i class="fa-solid fa-hashtag text-gold-600"></i>
+                    <span class="font-cinzel text-maroon-900 font-bold">ShaliniWedsAbhinandan</span>
+                    <i class="fa-regular fa-copy text-stone-400 group-hover:text-gold-600 text-[11px] ml-1"></i>
+                </button>
+
+                <a href="https://api.whatsapp.com/send?text=We%20cordially%20invite%20you%20to%20celebrate%20the%20royal%20wedding%20of%20Shalini%20%26%20Abhinandan%20at%20Corbett%20Adventure%20Resort%20on%20February%2015-16%2C%202027!%20%E2%9C%A8"
+                    target="_blank" rel="noopener noreferrer"
+                    class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#25D366]/10 border border-[#25D366]/40 text-[#128C7E] hover:bg-[#25D366]/20 transition text-xs font-semibold font-sans shadow-sm">
+                    <i class="fa-brands fa-whatsapp text-sm"></i>
+                    <span>Share on WhatsApp</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- COUNTDOWN SECTION -->
+    <section class="py-12 bg-maroon-950 text-white relative border-y-2 border-gold-400/50">
+        <div class="max-w-4xl mx-auto px-4 text-center">
+            <h2 class="font-cinzel text-xs md:text-sm uppercase tracking-[0.3em] text-gold-300 mb-6 font-semibold">
+                Counting The Moments Until The Auspicious Union
+            </h2>
+            <div class="grid grid-cols-4 gap-3 sm:gap-6 max-w-lg mx-auto">
+                <div class="bg-maroon-900/60 p-3 sm:p-4 rounded-xl border border-gold-400/30 backdrop-blur-sm">
+                    <span id="days" class="block font-cinzel text-2xl sm:text-4xl text-gold-200 font-bold">--</span>
+                    <span class="text-[10px] sm:text-xs uppercase tracking-widest text-stone-300 font-sans">Days</span>
+                </div>
+                <div class="bg-maroon-900/60 p-3 sm:p-4 rounded-xl border border-gold-400/30 backdrop-blur-sm">
+                    <span id="hours" class="block font-cinzel text-2xl sm:text-4xl text-gold-200 font-bold">--</span>
+                    <span class="text-[10px] sm:text-xs uppercase tracking-widest text-stone-300 font-sans">Hours</span>
+                </div>
+                <div class="bg-maroon-900/60 p-3 sm:p-4 rounded-xl border border-gold-400/30 backdrop-blur-sm">
+                    <span id="minutes" class="block font-cinzel text-2xl sm:text-4xl text-gold-200 font-bold">--</span>
+                    <span
+                        class="text-[10px] sm:text-xs uppercase tracking-widest text-stone-300 font-sans">Minutes</span>
+                </div>
+                <div class="bg-maroon-900/60 p-3 sm:p-4 rounded-xl border border-gold-400/30 backdrop-blur-sm">
+                    <span id="seconds" class="block font-cinzel text-2xl sm:text-4xl text-gold-200 font-bold">--</span>
+                    <span
+                        class="text-[10px] sm:text-xs uppercase tracking-widest text-stone-300 font-sans">Seconds</span>
+                </div>
+            </div>
+            <p class="text-xs text-gold-300/80 mt-6 tracking-widest uppercase font-cinzel">
+                Monday, 15th February 2027 • Jim Corbett, Uttarakhand
+            </p>
+            <div class="mt-4 flex items-center justify-center">
+                <button type="button" onclick="addToCalendar('full')"
+                    class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gold-400/20 hover:bg-gold-400/30 border border-gold-400/50 text-gold-200 text-xs uppercase tracking-wider font-cinzel font-semibold transition">
+                    <i class="fa-regular fa-calendar-check text-gold-300"></i>
+                    Add to Calendar (Google / iCal)
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- OUR STORY & CELEBRATION MOMENT -->
+    <section id="couple" class="py-20 px-4 max-w-6xl mx-auto">
+        <div class="text-center mb-16">
+            <span class="font-script text-3xl sm:text-4xl text-gold-600 block">Two Souls, One Sacred Promise</span>
+            <h2 class="font-cinzel text-3xl sm:text-4xl font-bold text-maroon-950 uppercase tracking-wide">
+                Shalini & Abhinandan
+            </h2>
+            <div class="w-24 h-0.5 bg-gradient-to-r from-transparent via-gold-500 to-transparent mx-auto mt-4"></div>
+        </div>
+
+        <div class="grid md:grid-cols-12 gap-10 items-center">
+            <!-- Left Portrait: Dancing in the garden -->
+            <div class="md:col-span-5 relative order-2 md:order-1">
+                <div
+                    class="absolute -inset-2 bg-gradient-to-tr from-gold-400 to-maroon-900 rounded-3xl opacity-25 blur-md">
+                </div>
+                <div class="relative bg-white p-3 rounded-2xl border border-gold-300 shadow-xl overflow-hidden cursor-pointer"
+                    onclick="openLightbox('images/couple-story.jpeg', 'Shalini & Abhinandan • Together in laughter, dance, and a lifetime of love')"
+                    title="Click to view photograph">
+                    <img src="images/couple-story.jpeg"
+                        alt="Shalini and Abhinandan joyful moment" class="zoom-img"
+                        onerror="this.src='https://placehold.co/600x750/1E3A60/FFF2B2?text=Shalini+%26+Abhinandan'" />
+                    <div class="p-3 text-center">
+                        <p class="font-cormorant italic text-lg text-stone-700">“Together in laughter, dance, and a
+                            lifetime of love.”</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Story content -->
+            <div class="md:col-span-7 space-y-6 order-1 md:order-2">
+                <div class="p-8 bg-[#FAF6EE] rounded-2xl border border-gold-300/80 shadow-md">
+                    <div class="flex items-center gap-3 text-gold-600 mb-3">
+                        <i class="fa-solid fa-feather-pointed text-xl"></i>
+                        <span class="font-cinzel text-xs uppercase tracking-widest font-bold">The Journey
+                            Together</span>
+                    </div>
+                    <h3 class="font-cormorant text-2xl sm:text-3xl text-maroon-950 font-semibold mb-4 leading-relaxed">
+                        Surrounded by the serene wilderness and misty Sal trees of Jim Corbett, we begin our new voyage.
+                    </h3>
+                    <p class="text-stone-700 leading-relaxed font-sans text-sm sm:text-base">
+                        What started with shared laughs, whispered dreams, and comforting conversations has brought us
+                        to this sacred milestone. As we prepare to take the sacred seven vows (<span
+                            class="font-semibold text-maroon-900">Saat Phere</span>) around the sacred agni, having you
+                        by our side to shower your blessings, joy, and warmth means the world to us and our families.
+                    </p>
+                    <div class="mt-6 pt-6 border-t border-gold-300/50 flex items-center justify-between">
+                        <div>
+                            <span class="block font-cinzel text-xs uppercase text-gold-600 font-bold">The Bride</span>
+                            <span class="font-cormorant text-xl text-maroon-900 font-semibold">Shalini</span>
+                        </div>
+                        <div class="text-2xl text-gold-500 font-script">&</div>
+                        <div class="text-right">
+                            <span class="block font-cinzel text-xs uppercase text-gold-600 font-bold">The Groom</span>
+                            <span class="font-cormorant text-xl text-maroon-900 font-semibold">Abhinandan</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="p-4 bg-white rounded-xl border border-gold-300/60 shadow-sm text-center">
+                        <i class="fa-solid fa-tree text-gold-600 text-xl mb-2"></i>
+                        <span
+                            class="block font-cinzel text-xs uppercase tracking-wider font-bold text-maroon-950">Destination</span>
+                        <span class="text-xs text-stone-600">Corbett National Forest Edge</span>
+                    </div>
+                    <div class="p-4 bg-white rounded-xl border border-gold-300/60 shadow-sm text-center">
+                        <i class="fa-solid fa-champagne-glasses text-gold-600 text-xl mb-2"></i>
+                        <span class="block font-cinzel text-xs uppercase tracking-wider font-bold text-maroon-950">2
+                            Days of Joy</span>
+                        <span class="text-xs text-stone-600">Haldi, Sangeet & Pheras</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- WEDDING EVENTS ITINERARY SECTION -->
+    <section id="events"
+        class="py-20 bg-gradient-to-b from-[#F7F0E4] to-[#FDFBF7] relative border-t border-gold-300/50">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="text-center mb-16">
+                <span class="font-script text-3xl sm:text-4xl text-gold-600 block">Festive Celebrations</span>
+                <h2 class="font-cinzel text-3xl sm:text-5xl font-bold text-maroon-950 uppercase tracking-tight">
+                    Wedding Ceremonies
+                </h2>
+                <p class="font-cormorant text-lg text-stone-600 italic mt-2">
+                    Join us across two days of joyous Indian rituals, music, and eternal promises
+                </p>
+                <div class="w-24 h-0.5 bg-gradient-to-r from-transparent via-gold-500 to-transparent mx-auto mt-4">
+                </div>
+            </div>
+
+            <!-- Timeline Cards -->
+            <div class="grid md:grid-cols-3 gap-8">
+
+                <!-- EVENT 1: HALDI & MEHENDI -->
+                <div
+                    class="bg-white rounded-2xl p-7 border-2 border-gold-300 shadow-xl relative overflow-hidden flex flex-col justify-between hover:shadow-2xl transition-all duration-300 group">
+                    <div
+                        class="absolute -right-8 -top-8 w-28 h-28 bg-pink-100/70 rounded-full group-hover:scale-125 transition-transform">
+                    </div>
+                    <div>
+                        <div
+                            class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-pink-50 border border-pink-200 text-pink-800 text-xs font-semibold uppercase tracking-wider mb-4">
+                            <i class="fa-solid fa-sun text-yellow-500"></i> Day 1 • Morning
+                        </div>
+                        <h3 class="font-cinzel text-2xl font-bold text-maroon-950 mb-1">Haldi & Mehendi</h3>
+                        <p class="font-script text-2xl text-gold-600 mb-4">Auspicious Colors & Henna Fragrance</p>
+
+                        <div class="space-y-3 text-stone-700 text-sm mb-6">
+                            <div class="flex items-center gap-2.5">
+                                <i class="fa-regular fa-clock text-gold-600 w-4 text-center"></i>
+                                <span class="font-medium">Monday, February 15, 2027 • 10:00 AM</span>
+                            </div>
+                            <div class="flex items-center gap-2.5">
+                                <i class="fa-solid fa-location-dot text-gold-600 w-4 text-center"></i>
+                                <span>Garden Lawns, Corbett Adventure Resort</span>
+                            </div>
+                        </div>
+
+                        <!-- Wardrobe Badge -->
+                        <div class="p-3.5 bg-pink-50/70 rounded-xl border border-pink-200 mb-4">
+                            <span
+                                class="block text-[11px] uppercase tracking-wider font-bold text-pink-900 font-cinzel">Dress
+                                Code</span>
+                            <span class="text-xs text-pink-950 font-medium">Light Pink & Florals</span>
+                            <p class="text-[11px] text-pink-800/80 mt-0.5">Pastel lehengas, breezy floral kurtas, and
+                                cheerful daytime tones.</p>
+                        </div>
+                    </div>
+
+                    <div
+                        class="pt-4 border-t border-stone-100 flex items-center justify-between text-xs text-stone-500">
+                        <span>Lawn & Poolside Vibes</span>
+                        <button type="button" onclick="addToCalendar('haldi')"
+                            class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-pink-50 hover:bg-pink-100 border border-pink-200 text-pink-900 font-semibold transition"
+                            title="Add Haldi & Mehendi to Calendar">
+                            <i class="fa-regular fa-calendar-plus text-yellow-600"></i>
+                            <span>Add to Calendar</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- EVENT 2: SANGEET & COCKTAIL -->
+                <div
+                    class="bg-maroon-950 text-white rounded-2xl p-7 border-2 border-gold-400 shadow-xl relative overflow-hidden flex flex-col justify-between hover:shadow-2xl transition-all duration-300 group">
+                    <div
+                        class="absolute -right-8 -top-8 w-28 h-28 bg-gold-400/10 rounded-full group-hover:scale-125 transition-transform">
+                    </div>
+                    <div>
+                        <div
+                            class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-gold-400/20 border border-gold-400/40 text-gold-300 text-xs font-semibold uppercase tracking-wider mb-4">
+                            <i class="fa-solid fa-guitar text-gold-300"></i> Day 1 • Evening
+                        </div>
+                        <h3 class="font-cinzel text-2xl font-bold text-gold-200 mb-1">Sangeet & Cocktails</h3>
+                        <p class="font-script text-2xl text-gold-400 mb-4">Beats, Glamour & Unforgettable Moves</p>
+
+                        <div class="space-y-3 text-stone-300 text-sm mb-6">
+                            <div class="flex items-center gap-2.5">
+                                <i class="fa-regular fa-clock text-gold-400 w-4 text-center"></i>
+                                <span class="font-medium">Monday, February 15, 2027 • 6:00 PM</span>
+                            </div>
+                            <div class="flex items-center gap-2.5">
+                                <i class="fa-solid fa-location-dot text-gold-400 w-4 text-center"></i>
+                                <span>Grand Courtyard, Corbett Adventure Resort</span>
+                            </div>
+                        </div>
+
+                        <!-- Wardrobe Badge -->
+                        <div class="p-3.5 bg-maroon-900/90 rounded-xl border border-gold-400/40 mb-4">
+                            <span
+                                class="block text-[11px] uppercase tracking-wider font-bold text-gold-300 font-cinzel">Dress
+                                Code</span>
+                            <span class="text-xs text-gold-100 font-medium">Indo-Western / Glamorous Sparkle</span>
+                            <p class="text-[11px] text-stone-300 mt-0.5">Sequined sarees, evening tuxedos, embellished
+                                sherwanis & gowns.</p>
+                        </div>
+                    </div>
+
+                    <div
+                        class="pt-4 border-t border-maroon-800 flex items-center justify-between text-xs text-gold-300/80">
+                        <span>Dinner & DJ Beats</span>
+                        <button type="button" onclick="addToCalendar('sangeet')"
+                            class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-gold-400/20 hover:bg-gold-400/30 border border-gold-400/40 text-gold-200 font-semibold transition"
+                            title="Add Sangeet to Calendar">
+                            <i class="fa-regular fa-calendar-plus text-gold-300"></i>
+                            <span>Add to Calendar</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- EVENT 3: THE WEDDING (VARMALA & PHERAS) -->
+                <div
+                    class="bg-white rounded-2xl p-7 border-2 border-gold-400 shadow-xl relative overflow-hidden flex flex-col justify-between hover:shadow-2xl transition-all duration-300 group">
+                    <div
+                        class="absolute -right-8 -top-8 w-28 h-28 bg-gold-200/50 rounded-full group-hover:scale-125 transition-transform">
+                    </div>
+                    <div>
+                        <div
+                            class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-gold-100 border border-gold-300 text-maroon-900 text-xs font-semibold uppercase tracking-wider mb-4">
+                            <i class="fa-solid fa-fire-flame-curved text-maroon-800"></i> Day 2 • Auspicious Hour
+                        </div>
+                        <h3 class="font-cinzel text-2xl font-bold text-maroon-950 mb-1">The Wedding</h3>
+                        <p class="font-script text-2xl text-gold-600 mb-4">Varmala, Saat Phere & Royal Feast</p>
+
+                        <div class="space-y-3 text-stone-700 text-sm mb-6">
+                            <div class="flex items-center gap-2.5">
+                                <i class="fa-regular fa-clock text-gold-600 w-4 text-center"></i>
+                                <span class="font-medium">Tuesday, February 16, 2027 • 4:00 PM</span>
+                            </div>
+                            <div class="flex items-center gap-2.5">
+                                <i class="fa-solid fa-location-dot text-gold-600 w-4 text-center"></i>
+                                <span>Royal Mandap, Corbett Adventure Resort</span>
+                            </div>
+                        </div>
+
+                        <!-- Wardrobe Badge -->
+                        <div class="p-3.5 bg-amber-50 rounded-xl border border-gold-300 mb-4">
+                            <span
+                                class="block text-[11px] uppercase tracking-wider font-bold text-maroon-900 font-cinzel">Dress
+                                Code</span>
+                            <span class="text-xs text-stone-900 font-medium">Traditional Ethnic & Pastel / Royal
+                                Heritage</span>
+                            <p class="text-[11px] text-stone-600 mt-0.5">Classic Banarasi silks, royal heritage
+                                bandhgalas & pastel lehengas.</p>
+                        </div>
+                    </div>
+
+                    <div
+                        class="pt-4 border-t border-stone-100 flex items-center justify-between text-xs text-stone-500">
+                        <span>Pheras followed by Royal Dinner</span>
+                        <button type="button" onclick="addToCalendar('wedding')"
+                            class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-gold-100 hover:bg-gold-200 border border-gold-300 text-maroon-900 font-semibold transition"
+                            title="Add The Wedding to Calendar">
+                            <i class="fa-regular fa-calendar-plus text-gold-600"></i>
+                            <span>Add to Calendar</span>
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- WARDROBE GUIDE SECTION -->
+    <section id="wardrobe" class="py-20 px-4 max-w-6xl mx-auto">
+        <div class="text-center mb-16">
+            <span class="font-script text-3xl sm:text-4xl text-gold-600 block">Curated Ensembles</span>
+            <h2 class="font-cinzel text-3xl sm:text-4xl font-bold text-maroon-950 uppercase tracking-tight">
+                Wardrobe & Style Guide
+            </h2>
+            <p class="font-cormorant text-lg text-stone-600 italic mt-2">
+                Color palettes & outfit inspirations to help you celebrate each ceremony in style
+            </p>
+            <div class="w-24 h-0.5 bg-gradient-to-r from-transparent via-gold-500 to-transparent mx-auto mt-4"></div>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-8">
+            <!-- Haldi Palette Card -->
+            <div class="bg-white p-6 rounded-2xl border border-gold-300 shadow-md">
+                <div class="flex items-center justify-between mb-4">
+                    <h4 class="font-cinzel font-bold text-maroon-950 text-lg">Haldi & Mehendi</h4>
+                    <span class="text-xs font-semibold px-2.5 py-1 rounded-full bg-pink-100 text-pink-800">Mon, Feb 15 •
+                        Morning</span>
+                </div>
+                <p class="text-xs uppercase tracking-wider font-bold text-gold-600 mb-2">Theme: Light Pink & Florals</p>
+                <p class="text-xs text-stone-600 mb-5">Keep it fresh, breezy, and sun-kissed for outdoor floral decor
+                    and haldi rituals.</p>
+
+                <span
+                    class="text-[11px] uppercase tracking-wider font-semibold text-stone-400 block mb-2 font-cinzel">Suggested
+                    Color Swatches</span>
+                <div class="flex items-center gap-2 mb-4">
+                    <div class="w-8 h-8 rounded-full bg-[#FFD1DC] border border-stone-200 shadow-sm" title="Light Pink">
+                    </div>
+                    <div class="w-8 h-8 rounded-full bg-[#FCE4EC] border border-stone-200 shadow-sm"
+                        title="Pastel Rose"></div>
+                    <div class="w-8 h-8 rounded-full bg-[#FFE0B2] border border-stone-200 shadow-sm"
+                        title="Peach Floral"></div>
+                    <div class="w-8 h-8 rounded-full bg-[#E8F5E9] border border-stone-200 shadow-sm"
+                        title="Mint Accent"></div>
+                    <div class="w-8 h-8 rounded-full bg-[#FFF9C4] border border-stone-200 shadow-sm"
+                        title="Subtle Sunshine"></div>
+                </div>
+                <div class="text-xs text-stone-500 space-y-1">
+                    <p>• <strong>Ladies:</strong> Floral organza lehengas, blush pink anarkalis, floral jewelry.</p>
+                    <p>• <strong>Gentlemen:</strong> Pastel pink kurtas with white churidar or nehru jackets.</p>
+                </div>
+            </div>
+
+            <!-- Sangeet Palette Card -->
+            <div class="bg-white p-6 rounded-2xl border border-gold-300 shadow-md">
+                <div class="flex items-center justify-between mb-4">
+                    <h4 class="font-cinzel font-bold text-maroon-950 text-lg">Sangeet & Cocktail</h4>
+                    <span class="text-xs font-semibold px-2.5 py-1 rounded-full bg-stone-900 text-gold-300">Mon, Feb 15
+                        • Evening</span>
+                </div>
+                <p class="text-xs uppercase tracking-wider font-bold text-gold-600 mb-2">Theme: Indo-Western / Glamour
+                </p>
+                <p class="text-xs text-stone-600 mb-5">High-glam, metallic accents, sequins, and red carpet night
+                    elegance.</p>
+
+                <span
+                    class="text-[11px] uppercase tracking-wider font-semibold text-stone-400 block mb-2 font-cinzel">Suggested
+                    Color Swatches</span>
+                <div class="flex items-center gap-2 mb-4">
+                    <div class="w-8 h-8 rounded-full bg-[#1C1C24] border border-stone-200 shadow-sm"
+                        title="Midnight Black"></div>
+                    <div class="w-8 h-8 rounded-full bg-[#3B1E40] border border-stone-200 shadow-sm" title="Deep Plum">
+                    </div>
+                    <div class="w-8 h-8 rounded-full bg-[#D4AF37] border border-stone-200 shadow-sm"
+                        title="Champagne Gold"></div>
+                    <div class="w-8 h-8 rounded-full bg-[#0F2847] border border-stone-200 shadow-sm" title="Royal Navy">
+                    </div>
+                    <div class="w-8 h-8 rounded-full bg-[#C0C0C0] border border-stone-200 shadow-sm"
+                        title="Metallic Silver"></div>
+                </div>
+                <div class="text-xs text-stone-500 space-y-1">
+                    <p>• <strong>Ladies:</strong> Shimmering sarees, glamorous cocktail gowns, Indo-western co-ords.</p>
+                    <p>• <strong>Gentlemen:</strong> Tuxedos, sharp blazers, or dark sequin-embroidered bandhgalas.</p>
+                </div>
+            </div>
+
+            <!-- Wedding Palette Card -->
+            <div class="bg-white p-6 rounded-2xl border border-gold-300 shadow-md">
+                <div class="flex items-center justify-between mb-4">
+                    <h4 class="font-cinzel font-bold text-maroon-950 text-lg">Wedding Ceremony</h4>
+                    <span class="text-xs font-semibold px-2.5 py-1 rounded-full bg-amber-100 text-maroon-900">Tue, Feb
+                        16 • Afternoon</span>
+                </div>
+                <p class="text-xs uppercase tracking-wider font-bold text-gold-600 mb-2">Theme: Traditional & Pastel
+                    Heritage</p>
+                <p class="text-xs text-stone-600 mb-5">Timeless Indian royalty with pastel sophistication and rich
+                    traditional weaves.</p>
+
+                <span
+                    class="text-[11px] uppercase tracking-wider font-semibold text-stone-400 block mb-2 font-cinzel">Suggested
+                    Color Swatches</span>
+                <div class="flex items-center gap-2 mb-4">
+                    <div class="w-8 h-8 rounded-full bg-[#0B192C] border border-stone-200 shadow-sm"
+                        title="Royal Midnight"></div>
+                    <div class="w-8 h-8 rounded-full bg-[#E6C280] border border-stone-200 shadow-sm" title="Pale Gold">
+                    </div>
+                    <div class="w-8 h-8 rounded-full bg-[#F5DEB3] border border-stone-200 shadow-sm"
+                        title="Warm Champagne"></div>
+                    <div class="w-8 h-8 rounded-full bg-[#E8D7CA] border border-stone-200 shadow-sm"
+                        title="Pastel Ivory"></div>
+                    <div class="w-8 h-8 rounded-full bg-[#1E3A60] border border-stone-200 shadow-sm"
+                        title="Royal Sapphire"></div>
+                </div>
+                <div class="text-xs text-stone-500 space-y-1">
+                    <p>• <strong>Ladies:</strong> Pastel bridal weaves, heritage Kanjeevarams, traditional lehengas.</p>
+                    <p>• <strong>Gentlemen:</strong> Royal ivory/beige sherwanis, embroidered safas, silk kurtas.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- VENUE & ACCOMMODATION LOGISTICS -->
+    <section id="venue" class="py-20 bg-[#F7F0E4] relative border-y border-gold-300">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="text-center mb-16">
+                <span class="font-script text-3xl sm:text-4xl text-gold-600 block">The Destination</span>
+                <h2 class="font-cinzel text-3xl sm:text-5xl font-bold text-maroon-950 uppercase tracking-tight">
+                    Corbett Adventure Resort
+                </h2>
+                <p class="font-cormorant text-lg text-stone-700 italic mt-2">
+                    Ramnagar-Nainital Road, Village Bailparao, District Nainital, Uttarakhand
+                </p>
+                <div class="w-24 h-0.5 bg-gradient-to-r from-transparent via-gold-500 to-transparent mx-auto mt-4">
+                </div>
+            </div>
+
+            <div class="grid lg:grid-cols-12 gap-8 items-stretch">
+                <!-- Venue Details -->
+                <div
+                    class="lg:col-span-5 bg-white p-8 rounded-2xl border border-gold-300 shadow-lg flex flex-col justify-between">
+                    <div>
+                        <div
+                            class="inline-flex items-center gap-2 px-3 py-1 bg-maroon-900/10 text-maroon-900 rounded-full font-cinzel text-xs font-bold uppercase tracking-wider mb-6">
+                            <i class="fa-solid fa-hotel"></i> Guest Hospitality & Stay
+                        </div>
+
+                        <h3 class="font-cinzel text-2xl font-bold text-maroon-950 mb-3">
+                            Accommodations Reserved
+                        </h3>
+                        <p class="text-stone-600 text-sm leading-relaxed mb-6">
+                            To ensure you have a relaxed and memorable celebration, we have reserved room blocks for our
+                            cherished guests directly at <strong>Corbett Adventure Resort</strong>.
+                        </p>
+
+                        <div class="space-y-4 text-sm text-stone-700">
+                            <div class="flex items-start gap-3">
+                                <i class="fa-solid fa-map-pin text-gold-600 text-base mt-1"></i>
+                                <div>
+                                    <span class="font-semibold block text-stone-900">Address:</span>
+                                    <span>Ramnagar-Nainital Road, Village Bailparao, Ramnagar, District Nainital,
+                                        Uttarakhand 263139, India</span>
+                                </div>
+                            </div>
+
+                            <div class="flex items-start gap-3">
+                                <i class="fa-solid fa-train text-gold-600 text-base mt-1"></i>
+                                <div>
+                                    <span class="font-semibold block text-stone-900">Nearest Railhead:</span>
+                                    <span>Ramnagar Railway Station (RMR) - approx. 18 km away</span>
+                                </div>
+                            </div>
+
+                            <div class="flex items-start gap-3">
+                                <i class="fa-solid fa-plane-departure text-gold-600 text-base mt-1"></i>
+                                <div>
+                                    <span class="font-semibold block text-stone-900">Nearest Airport:</span>
+                                    <span>Pantnagar Airport (PGH) / IGI Airport New Delhi</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="pt-8 mt-6 border-t border-stone-200">
+                        <a href="https://share.google/62xEUByRcgddo3ndM" target="_blank" rel="noopener noreferrer"
+                            class="inline-flex items-center justify-center gap-2.5 w-full py-3.5 px-6 rounded-xl bg-maroon-900 text-gold-200 font-cinzel text-xs uppercase tracking-widest font-bold hover:bg-maroon-950 shadow-md transition">
+                            <i class="fa-solid fa-diamond-turn-right text-gold-400"></i>
+                            Open in Google Maps
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Google Maps Interactive Preview / Card -->
+                <div class="lg:col-span-7 bg-white p-4 rounded-2xl border border-gold-300 shadow-lg flex flex-col">
+                    <div
+                        class="relative w-full h-[380px] lg:h-full min-h-[340px] rounded-xl overflow-hidden border border-stone-200">
+                        <!-- Embedded Responsive Map -->
+                        <iframe title="Corbett Adventure Resort Map"
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3478.4357422324933!2d79.1678278759325!3d29.328328175291244!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390a174c8612140d%3A0x6b1461ffcb585fa5!2sCorbett%20Adventure%20Resort!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin"
+                            class="w-full h-full border-0" allowfullscreen="" loading="lazy"
+                            referrerpolicy="no-referrer-when-downgrade">
+                        </iframe>
+
+                        <div
+                            class="absolute bottom-3 left-3 right-3 bg-white/95 backdrop-blur-md p-3 rounded-lg border border-gold-300/80 shadow-md flex items-center justify-between text-xs">
+                            <span class="font-semibold text-stone-800 truncate pr-2">Corbett Adventure Resort,
+                                Bailparao</span>
+                            <a href="https://share.google/62xEUByRcgddo3ndM" target="_blank"
+                                class="text-maroon-900 font-bold hover:underline flex items-center gap-1 shrink-0">
+                                Get Directions <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- DESTINATION GUEST CONCIERGE & ESSENTIAL GUIDE -->
+    <section id="concierge"
+        class="py-20 bg-gradient-to-b from-[#FDFBF7] via-[#F7F0E4] to-[#FDFBF7] relative border-t border-gold-300/60">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="text-center mb-16">
+                <span class="font-script text-3xl sm:text-4xl text-gold-600 block">Hospitality & Information</span>
+                <h2 class="font-cinzel text-3xl sm:text-5xl font-bold text-maroon-950 uppercase tracking-tight">
+                    Guest Concierge & Destination Guide
+                </h2>
+                <p class="font-cormorant text-lg text-stone-600 italic mt-2">
+                    Everything you need to know for a seamless and comfortable celebration at Jim Corbett
+                </p>
+                <div class="w-24 h-0.5 bg-gradient-to-r from-transparent via-gold-500 to-transparent mx-auto mt-4">
+                </div>
+            </div>
+
+            <!-- Concierge Cards Grid -->
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- CARD 1: WEATHER & PACKING -->
+                <div
+                    class="bg-white p-6 rounded-2xl border border-gold-300/80 shadow-md hover:shadow-xl transition-all duration-300 flex flex-col justify-between">
+                    <div>
+                        <div
+                            class="w-12 h-12 rounded-full bg-amber-50 text-gold-600 border border-gold-300 flex items-center justify-center text-xl mb-4 shadow-sm">
+                            <i class="fa-solid fa-cloud-sun"></i>
+                        </div>
+                        <h3 class="font-cinzel font-bold text-maroon-950 text-base mb-2">February Climate</h3>
+                        <p class="text-xs text-stone-600 leading-relaxed">
+                            Daytimes are warm, sunny & pleasant (<strong>20°C - 24°C</strong>). However, temperatures
+                            drop sharply after sunset to <strong>8°C - 12°C</strong>.
+                        </p>
+                    </div>
+                    <div class="mt-4 p-3 bg-stone-50 rounded-xl border border-stone-200 text-[11px] text-stone-700">
+                        <i class="fa-solid fa-vest text-gold-600 mr-1"></i>
+                        <strong>Tip:</strong> Carry a warm shawl, pashmina, stole, or velvet jacket for the open-air
+                        Sangeet evening.
+                    </div>
+                </div>
+
+                <!-- CARD 2: LAWN & FOOTWEAR ADVICE -->
+                <div
+                    class="bg-white p-6 rounded-2xl border border-gold-300/80 shadow-md hover:shadow-xl transition-all duration-300 flex flex-col justify-between">
+                    <div>
+                        <div
+                            class="w-12 h-12 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 flex items-center justify-center text-xl mb-4 shadow-sm">
+                            <i class="fa-solid fa-shoe-prints"></i>
+                        </div>
+                        <h3 class="font-cinzel font-bold text-maroon-950 text-base mb-2">Footwear Advice</h3>
+                        <p class="text-xs text-stone-600 leading-relaxed">
+                            Ceremonies and dining are hosted across open lush garden lawns, cobblestone pathways, and
+                            pool courtyards.
+                        </p>
+                    </div>
+                    <div class="mt-4 p-3 bg-stone-50 rounded-xl border border-stone-200 text-[11px] text-stone-700">
+                        <i class="fa-solid fa-check text-emerald-600 mr-1"></i>
+                        <strong>Recommended:</strong> Block heels, wedges, or traditional embellished juttis/loafers
+                        over stilettos to avoid sinking into the grass.
+                    </div>
+                </div>
+
+                <!-- CARD 3: TRAVEL & TRANSFERS -->
+                <div
+                    class="bg-white p-6 rounded-2xl border border-gold-300/80 shadow-md hover:shadow-xl transition-all duration-300 flex flex-col justify-between">
+                    <div>
+                        <div
+                            class="w-12 h-12 rounded-full bg-blue-50 text-blue-700 border border-blue-200 flex items-center justify-center text-xl mb-4 shadow-sm">
+                            <i class="fa-solid fa-car-side"></i>
+                        </div>
+                        <h3 class="font-cinzel font-bold text-maroon-950 text-base mb-2">Travel & Shuttles</h3>
+                        <p class="text-xs text-stone-600 leading-relaxed">
+                            Ramnagar Railway Station (RMR) is ~18 km away (approx. 25 mins). Dedicated guest pick-up
+                            shuttles will operate on both celebration days.
+                        </p>
+                    </div>
+                    <div class="mt-4 p-3 bg-stone-50 rounded-xl border border-stone-200 text-[11px] text-stone-700">
+                        <i class="fa-solid fa-phone text-blue-600 mr-1"></i>
+                        <strong>Coordination:</strong> Share your train/flight arrival time with our travel desk for
+                        smooth transfers.
+                    </div>
+                </div>
+
+                <!-- CARD 4: JUNGLE SAFARI TIPS -->
+                <div
+                    class="bg-white p-6 rounded-2xl border border-gold-300/80 shadow-md hover:shadow-xl transition-all duration-300 flex flex-col justify-between">
+                    <div>
+                        <div
+                            class="w-12 h-12 rounded-full bg-amber-50 text-amber-800 border border-amber-200 flex items-center justify-center text-xl mb-4 shadow-sm">
+                            <i class="fa-solid fa-paw"></i>
+                        </div>
+                        <h3 class="font-cinzel font-bold text-maroon-950 text-base mb-2">Corbett Safari</h3>
+                        <p class="text-xs text-stone-600 leading-relaxed">
+                            Guests extending their stay for a jungle safari are advised to book Jeep Safari permits
+                            online in advance (Bijrani/Jhirna/Dhela zones).
+                        </p>
+                    </div>
+                    <div class="mt-4 p-3 bg-stone-50 rounded-xl border border-stone-200 text-[11px] text-stone-700">
+                        <i class="fa-solid fa-mitten text-amber-700 mr-1"></i>
+                        <strong>Safari Note:</strong> Open gypsies at 6:00 AM are very cold. Pack heavy woolens, gloves
+                        & neutral earthy clothing.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Hospitality Helpdesk Banner -->
+            <div
+                class="mt-10 p-6 rounded-2xl bg-white border-2 border-gold-300 shadow-lg flex flex-col md:flex-row items-center justify-between gap-6">
+                <div class="flex items-center gap-4 text-center md:text-left">
+                    <div
+                        class="w-14 h-14 rounded-full bg-maroon-900 text-gold-300 border border-gold-400 flex items-center justify-center text-2xl shrink-0 shadow-md">
+                        <i class="fa-solid fa-bell-concierge"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-cinzel text-base font-bold text-maroon-950">Need Assistance with Rooms or
+                            Travel?</h4>
+                        <p class="text-xs text-stone-600 mt-0.5">Our wedding concierge team is here to assist you
+                            throughout your journey and stay.</p>
+                    </div>
+                </div>
+                <div class="flex flex-wrap items-center gap-3">
+                    <a href="tel:+919876543210"
+                        class="px-5 py-2.5 rounded-full bg-maroon-900 text-gold-200 border border-gold-400 text-xs font-cinzel uppercase tracking-wider font-bold hover:bg-maroon-800 transition flex items-center gap-2 shadow-sm">
+                        <i class="fa-solid fa-phone text-gold-400"></i> Call Concierge
+                    </a>
+                    <a href="https://api.whatsapp.com/send?phone=919876543210&text=Namaste!%20I%20am%20a%20guest%20for%20Shalini%20%26%20Abhinandan%27s%20wedding%20and%20need%20assistance."
+                        target="_blank" rel="noopener noreferrer"
+                        class="px-5 py-2.5 rounded-full bg-[#25D366] text-white text-xs font-cinzel uppercase tracking-wider font-bold hover:bg-[#1ebd5a] transition flex items-center gap-2 shadow-sm">
+                        <i class="fa-brands fa-whatsapp text-sm"></i> WhatsApp Desk
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- STREAMLINED RSVP SECTION -->
+    <section id="rsvp" class="py-20 px-4 max-w-3xl mx-auto">
+        <div class="bg-white rounded-3xl p-8 sm:p-12 border-2 border-gold-400 shadow-2xl relative overflow-hidden">
+            <!-- Header Ornament -->
+            <div class="text-center mb-8">
+                <div
+                    class="w-12 h-12 mx-auto rounded-full bg-maroon-900 text-gold-300 border border-gold-400 flex items-center justify-center font-cinzel font-bold text-base mb-3 shadow-md">
+                    A&S
+                </div>
+                <span class="font-script text-3xl text-gold-600 block">We Request The Honor Of Your Presence</span>
+                <h2 class="font-cinzel text-3xl sm:text-4xl font-bold text-maroon-950 uppercase tracking-wide">
+                    RSVP
+                </h2>
+                <p class="text-stone-600 text-xs sm:text-sm mt-2 font-sans">
+                    Kindly let us know if you will be celebrating with us by replying below.
+                </p>
+                <div class="w-16 h-0.5 bg-gold-400 mx-auto mt-4"></div>
+            </div>
+
+            <!-- Quick WhatsApp RSVP alternative -->
+            <div
+                class="mb-6 p-3.5 rounded-xl bg-emerald-50/80 border border-emerald-200 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs">
+                <div class="flex items-center gap-2.5 text-emerald-950 font-medium">
+                    <i class="fa-brands fa-whatsapp text-emerald-600 text-xl"></i>
+                    <span>Prefer replying directly via WhatsApp?</span>
+                </div>
+                <a href="https://api.whatsapp.com/send?phone=919876543210&text=Namaste!%20I%20would%20like%20to%20confirm%20my%20RSVP%20for%20Shalini%20%26%20Abhinandan%27s%20Wedding."
+                    target="_blank" rel="noopener noreferrer"
+                    class="px-4 py-2 rounded-full bg-emerald-600 text-white font-semibold hover:bg-emerald-700 transition flex items-center gap-1.5 text-xs shrink-0 shadow-sm">
+                    <span>Quick RSVP on WhatsApp</span>
+                    <i class="fa-solid fa-arrow-right text-[10px]"></i>
+                </a>
+            </div>
+
+            <!-- RSVP Tab Controls -->
+            <div class="flex rounded-2xl bg-[#F7F0E4] p-1.5 border border-gold-300 mb-8 max-w-md mx-auto shadow-inner">
+                <button type="button" id="tabAcceptBtn" onclick="switchRsvpTab('accept')"
+                    class="flex-1 py-3 px-3 sm:px-4 rounded-xl font-cinzel text-xs sm:text-sm uppercase tracking-wider font-bold transition-all duration-300 flex items-center justify-center gap-2 bg-gradient-to-r from-maroon-900 via-maroon-800 to-maroon-900 text-gold-200 shadow-md border border-gold-400/60">
+                    <i class="fa-solid fa-heart text-gold-300"></i>
+                    <span>Joyfully Accepts</span>
+                </button>
+                <button type="button" id="tabDeclineBtn" onclick="switchRsvpTab('decline')"
+                    class="flex-1 py-3 px-3 sm:px-4 rounded-xl font-cinzel text-xs sm:text-sm uppercase tracking-wider font-bold transition-all duration-300 flex items-center justify-center gap-2 text-stone-600 hover:text-maroon-900 hover:bg-gold-50/60">
+                    <i class="fa-regular fa-envelope-open text-stone-400"></i>
+                    <span>Regretfully Declines</span>
+                </button>
+            </div>
+
+            <!-- TAB 1: JOYFULLY ACCEPTS PANEL (Default Open) -->
+            <div id="rsvpAcceptPanel">
+                <form id="acceptRsvpForm" onsubmit="handleAcceptSubmit(event)" class="space-y-6">
+                    <!-- Guest Full Name -->
+                    <div>
+                        <label for="guestName"
+                            class="block font-cinzel text-xs uppercase tracking-wider font-bold text-stone-800 mb-2">
+                            Guest Name(s) *
+                        </label>
+                        <input type="text" id="guestName" required placeholder="e.g. Rahul & Priya Sharma"
+                            class="w-full px-4 py-3 rounded-xl border border-stone-300 focus:outline-none focus:ring-2 focus:ring-gold-400 focus:border-transparent font-sans text-sm transition" />
+                    </div>
+
+                    <!-- Contact Phone / WhatsApp -->
+                    <div>
+                        <label for="guestPhone"
+                            class="block font-cinzel text-xs uppercase tracking-wider font-bold text-stone-800 mb-2">
+                            Phone / WhatsApp Number *
+                        </label>
+                        <input type="tel" id="guestPhone" required placeholder="+91 98765 43210"
+                            class="w-full px-4 py-3 rounded-xl border border-stone-300 focus:outline-none focus:ring-2 focus:ring-gold-400 focus:border-transparent font-sans text-sm transition" />
+                    </div>
+
+                    <!-- Number of Guests -->
+                    <div>
+                        <label for="guestCount"
+                            class="block font-cinzel text-xs uppercase tracking-wider font-bold text-stone-800 mb-2">
+                            Number of Attending Guests *
+                        </label>
+                        <select id="guestCount" required
+                            class="w-full px-4 py-3 rounded-xl border border-stone-300 focus:outline-none focus:ring-2 focus:ring-gold-400 focus:border-transparent font-sans text-sm bg-white transition">
+                            <option value="1">1 Guest</option>
+                            <option value="2" selected>2 Guests</option>
+                            <option value="3">3 Guests</option>
+                            <option value="4">4 Guests</option>
+                            <option value="5+">5+ Guests (Family)</option>
+                        </select>
+                    </div>
+
+                    <!-- Ceremonies Attendance -->
+                    <div>
+                        <label class="block font-cinzel text-xs uppercase tracking-wider font-bold text-stone-800 mb-2">
+                            Ceremonies You Will Be Attending *
+                        </label>
+                        <div class="grid sm:grid-cols-3 gap-3">
+                            <label
+                                class="flex items-center gap-2 p-3 rounded-xl border border-stone-200 bg-stone-50 cursor-pointer hover:bg-gold-50 transition text-xs font-semibold text-stone-800">
+                                <input type="checkbox" name="events" value="Haldi & Mehendi" checked
+                                    class="w-4 h-4 text-maroon-800 rounded border-stone-300 focus:ring-gold-400">
+                                <span>Haldi & Mehendi (Mon)</span>
+                            </label>
+                            <label
+                                class="flex items-center gap-2 p-3 rounded-xl border border-stone-200 bg-stone-50 cursor-pointer hover:bg-gold-50 transition text-xs font-semibold text-stone-800">
+                                <input type="checkbox" name="events" value="Sangeet & Cocktail" checked
+                                    class="w-4 h-4 text-maroon-800 rounded border-stone-300 focus:ring-gold-400">
+                                <span>Sangeet & Night (Mon)</span>
+                            </label>
+                            <label
+                                class="flex items-center gap-2 p-3 rounded-xl border border-stone-200 bg-stone-50 cursor-pointer hover:bg-gold-50 transition text-xs font-semibold text-stone-800">
+                                <input type="checkbox" name="events" value="Wedding Ceremony" checked
+                                    class="w-4 h-4 text-maroon-800 rounded border-stone-300 focus:ring-gold-400">
+                                <span>Wedding Pheras (Tue)</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Warm Wishes / Message -->
+                    <div>
+                        <label for="guestWishes"
+                            class="block font-cinzel text-xs uppercase tracking-wider font-bold text-stone-800 mb-2">
+                            Wishes & Message for Shalini & Abhinandan
+                        </label>
+                        <textarea id="guestWishes" rows="3"
+                            placeholder="Share your warm thoughts and blessings for the couple..."
+                            class="w-full px-4 py-3 rounded-xl border border-stone-300 focus:outline-none focus:ring-2 focus:ring-gold-400 focus:border-transparent font-sans text-sm transition"></textarea>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <div>
+                        <button type="submit"
+                            class="w-full py-4 px-8 rounded-full bg-gradient-to-r from-maroon-900 via-maroon-800 to-maroon-900 text-gold-200 border-2 border-gold-400 font-cinzel text-sm uppercase tracking-widest font-bold shadow-xl hover:scale-[1.01] active:scale-[0.99] transition-all">
+                            Confirm Attendance & Joyfully Accept
+                        </button>
+                    </div>
+                </form>
+
+                <!-- Dynamic Confirmation Notification -->
+                <div id="rsvpSuccessMsg"
+                    class="hidden mt-6 p-6 rounded-2xl bg-emerald-50 border border-emerald-300 text-center">
+                    <i class="fa-solid fa-circle-check text-emerald-600 text-3xl mb-2"></i>
+                    <h4 class="font-cinzel text-lg font-bold text-emerald-900">Thank You!</h4>
+                    <p id="confirmationText" class="text-xs sm:text-sm text-emerald-800 mt-1">
+                        Your RSVP has been gratefully received. We can’t wait to celebrate with you at Jim Corbett!
+                    </p>
+                    <button type="button" onclick="resetRsvpForm()"
+                        class="mt-4 inline-block text-xs font-semibold text-emerald-800 underline hover:text-emerald-950 font-sans">
+                        Update or Submit Another RSVP
+                    </button>
+                </div>
+            </div>
+
+            <!-- TAB 2: REGRETFULLY DECLINES PANEL (Hidden by Default) -->
+            <div id="rsvpDeclinePanel" class="hidden">
+                <div class="mb-6 p-4 rounded-xl bg-amber-50/70 border border-amber-200 text-center">
+                    <p class="font-cormorant italic text-base sm:text-lg text-maroon-950 font-medium">
+                        “Even from afar, your blessings and heartfelt prayers will illuminate our sacred beginning.”
+                    </p>
+                </div>
+
+                <form id="declineRsvpForm" onsubmit="handleDeclineSubmit(event)" class="space-y-6">
+                    <!-- Guest Full Name -->
+                    <div>
+                        <label for="declineGuestName"
+                            class="block font-cinzel text-xs uppercase tracking-wider font-bold text-stone-800 mb-2">
+                            Guest Name(s) *
+                        </label>
+                        <input type="text" id="declineGuestName" required placeholder="e.g. Vikram & Ananya Verma"
+                            class="w-full px-4 py-3 rounded-xl border border-stone-300 focus:outline-none focus:ring-2 focus:ring-gold-400 focus:border-transparent font-sans text-sm transition" />
+                    </div>
+
+                    <!-- Contact Phone / WhatsApp / Email -->
+                    <div>
+                        <label for="declineGuestContact"
+                            class="block font-cinzel text-xs uppercase tracking-wider font-bold text-stone-800 mb-2">
+                            Phone / WhatsApp Number or Email *
+                        </label>
+                        <input type="text" id="declineGuestContact" required
+                            placeholder="+91 98765 43210 or email@domain.com"
+                            class="w-full px-4 py-3 rounded-xl border border-stone-300 focus:outline-none focus:ring-2 focus:ring-gold-400 focus:border-transparent font-sans text-sm transition" />
+                    </div>
+
+                    <!-- Warm Wishes / Message -->
+                    <div>
+                        <label for="declineGuestWishes"
+                            class="block font-cinzel text-xs uppercase tracking-wider font-bold text-stone-800 mb-2">
+                            Blessings & Warm Wishes for Shalini & Abhinandan *
+                        </label>
+                        <textarea id="declineGuestWishes" rows="4" required
+                            placeholder="Share your heartfelt wishes, love, and blessings for the couple's new beginning..."
+                            class="w-full px-4 py-3 rounded-xl border border-stone-300 focus:outline-none focus:ring-2 focus:ring-gold-400 focus:border-transparent font-sans text-sm transition"></textarea>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <div>
+                        <button type="submit"
+                            class="w-full py-4 px-8 rounded-full bg-gradient-to-r from-stone-800 via-maroon-950 to-stone-900 text-gold-200 border-2 border-gold-400 font-cinzel text-sm uppercase tracking-widest font-bold shadow-xl hover:scale-[1.01] active:scale-[0.99] transition-all">
+                            Send Regrets & Heartfelt Blessings
+                        </button>
+                    </div>
+                </form>
+
+                <!-- Dynamic Confirmation Notification -->
+                <div id="rsvpDeclineSuccessMsg"
+                    class="hidden mt-6 p-6 rounded-2xl bg-amber-50 border border-amber-300 text-center">
+                    <i class="fa-solid fa-heart text-maroon-800 text-3xl mb-2"></i>
+                    <h4 class="font-cinzel text-lg font-bold text-maroon-950">Thank You For Your Blessings</h4>
+                    <p id="declineConfirmationText" class="text-xs sm:text-sm text-stone-700 mt-1">
+                        We will dearly miss your presence at Jim Corbett, but your love and wishes are deeply cherished!
+                    </p>
+                    <button type="button" onclick="resetRsvpForm()"
+                        class="mt-4 inline-block text-xs font-semibold text-maroon-900 underline hover:text-maroon-950 font-sans">
+                        Update or Change Response
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="bg-maroon-950 text-white pt-16 pb-12 border-t-2 border-gold-400">
+        <div class="max-w-4xl mx-auto px-4 text-center">
+            <!-- Monogram Seal -->
+            <div
+                class="w-16 h-16 mx-auto rounded-full bg-maroon-900 text-gold-300 border-2 border-gold-400 flex items-center justify-center font-cinzel font-bold text-xl mb-4 shadow-xl">
+                A&S
+            </div>
+
+            <h3 class="font-cinzel text-2xl sm:text-3xl font-bold tracking-wider text-gold-200">
+                Shalini & Abhinandan
+            </h3>
+
+            <p class="font-script text-2xl text-gold-400 mt-1">
+                February 15 - 16, 2027
+            </p>
+
+            <p class="text-xs uppercase tracking-widest text-stone-300 mt-4 font-cinzel">
+                Corbett Adventure Resort • Ramnagar, Nainital, Uttarakhand
+            </p>
+
+            <div class="w-24 h-px bg-gold-500/40 mx-auto my-6"></div>
+
+            <p class="text-xs text-stone-400 font-sans">
+                With heartful gratitude from the Sharma & Singh families.
+            </p>
+        </div>
+    </footer>
+
+    <!-- CALENDAR PICKER MODAL -->
+    <div id="calendarModal"
+        class="fixed inset-0 z-50 hidden bg-maroon-950/80 backdrop-blur-md items-center justify-center p-4 transition-all duration-300"
+        onclick="closeCalendarModal()">
+        <div class="relative w-full max-w-sm bg-[#FAF6EE] rounded-2xl p-7 border-2 border-gold-400 shadow-2xl text-center"
+            onclick="event.stopPropagation()">
+            <button onclick="closeCalendarModal()"
+                class="absolute top-4 right-4 text-stone-400 hover:text-maroon-900 text-lg transition">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <div
+                class="w-12 h-12 mx-auto rounded-full bg-maroon-900 text-gold-300 border border-gold-400 flex items-center justify-center text-xl mb-3 shadow-md">
+                <i class="fa-regular fa-calendar-check"></i>
+            </div>
+            <h4 id="calModalTitle" class="font-cinzel text-base font-bold text-maroon-950">Add to Calendar</h4>
+            <p id="calModalSubtitle" class="text-xs text-stone-600 mt-1 mb-6 font-sans">Select your preferred calendar
+                application</p>
+            <div class="space-y-3">
+                <button type="button" onclick="executeGoogleCal()"
+                    class="w-full py-3.5 px-4 rounded-xl bg-white hover:bg-gold-50 border border-gold-300 text-maroon-950 font-cinzel text-xs uppercase tracking-wider font-bold shadow-sm hover:shadow-md transition flex items-center justify-center gap-2.5">
+                    <i class="fa-brands fa-google text-red-500 text-base"></i>
+                    <span>Google Calendar</span>
+                </button>
+                <button type="button" onclick="executeIcsCal()"
+                    class="w-full py-3.5 px-4 rounded-xl bg-maroon-900 hover:bg-maroon-800 text-gold-200 border border-gold-400 font-cinzel text-xs uppercase tracking-wider font-bold shadow-md hover:shadow-lg transition flex items-center justify-center gap-2.5">
+                    <i class="fa-brands fa-apple text-base"></i>
+                    <span>Apple / Outlook (.ics)</span>
+                </button>
+            </div>
+            <p class="text-[11px] text-stone-400 mt-4">Pre-filled with event timings & Corbett resort directions</p>
+        </div>
+    </div>
+
+    <!-- ROYAL PHOTO LIGHTBOX MODAL -->
+    <div id="photoLightbox"
+        class="fixed inset-0 z-50 hidden bg-maroon-950/90 backdrop-blur-md items-center justify-center p-4 transition-opacity duration-300"
+        onclick="closeLightbox()">
+        <div class="relative max-w-2xl w-full bg-stone-900 p-2.5 rounded-2xl border-2 border-gold-400 shadow-2xl"
+            onclick="event.stopPropagation()">
+            <button onclick="closeLightbox()"
+                class="absolute -top-3.5 -right-3.5 w-10 h-10 rounded-full bg-maroon-900 text-gold-200 border-2 border-gold-400 flex items-center justify-center hover:scale-105 transition shadow-xl z-20">
+                <i class="fa-solid fa-xmark text-base"></i>
+            </button>
+            <div class="overflow-hidden rounded-xl max-h-[75vh] flex items-center justify-center bg-stone-950">
+                <img id="lightboxImg" src="" alt="Couple moment" class="max-h-[75vh] w-auto mx-auto object-contain" />
+            </div>
+            <p id="lightboxCaption"
+                class="text-center font-cormorant italic text-lg sm:text-xl text-gold-200 mt-3 pb-1"></p>
+        </div>
+    </div>
+
+    <!-- HASHTAG COPIED TOAST -->
+    <div id="hashtagToast"
+        class="fixed top-20 right-6 z-50 opacity-0 pointer-events-none transition-opacity duration-300 bg-maroon-950 text-gold-200 border border-gold-400 px-5 py-3 rounded-2xl shadow-2xl flex items-center gap-2.5 text-xs font-cinzel font-semibold backdrop-blur-md">
+        <i class="fa-solid fa-circle-check text-emerald-400 text-base"></i>
+        <span>Hashtag copied: #ShaliniWedsAbhinandan</span>
+    </div>
+
+    <!-- INTERACTION LOGIC & WEB AUDIO SYNTHESIZER SCRIPT -->
+    <script>
+        // Virtual Envelope Open Animation
+        function openInvitation() {
+            const modal = document.getElementById('envelopeModal');
+            if (modal) {
+                modal.classList.add('opacity-0', 'pointer-events-none');
+                setTimeout(() => {
+                    modal.style.display = 'none';
+                }, 700);
+            }
+
+            // Ensure document and body are 100% scrollable
+            document.body.style.overflowY = 'auto';
+            document.documentElement.style.overflowY = 'auto';
+
+            // Initialize gentle floral petal shower (Pushpavrishti)
+            initPetals();
+
+            // Start pleasant ambient Raag notes if user hasn't toggled yet
+            if (!audioContextStarted) {
+                toggleAmbience();
+            }
+        }
+
+        // Countdown Timer to Feb 15, 2027 10:00 AM IST
+        function updateCountdown() {
+            // Auspicious start: Monday, February 15, 2027 at 10:00 AM IST
+            const targetDate = new Date("2027-02-15T10:00:00+05:30").getTime();
+            const now = new Date().getTime();
+            const difference = targetDate - now;
+
+            const daysEl = document.getElementById("days");
+            const hoursEl = document.getElementById("hours");
+            const minutesEl = document.getElementById("minutes");
+            const secondsEl = document.getElementById("seconds");
+
+            if (difference > 0) {
+                const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+
+                if (daysEl) daysEl.innerText = days.toString().padStart(2, '0');
+                if (hoursEl) hoursEl.innerText = hours.toString().padStart(2, '0');
+                if (minutesEl) minutesEl.innerText = minutes.toString().padStart(2, '0');
+                if (secondsEl) secondsEl.innerText = seconds.toString().padStart(2, '0');
+            } else {
+                if (daysEl) daysEl.innerText = "00";
+                if (hoursEl) hoursEl.innerText = "00";
+                if (minutesEl) minutesEl.innerText = "00";
+                if (secondsEl) secondsEl.innerText = "00";
+            }
+        }
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+
+        // RSVP Tab Switching (Joyfully Accepts vs Regretfully Declines)
+        function switchRsvpTab(tab) {
+            const tabAcceptBtn = document.getElementById('tabAcceptBtn');
+            const tabDeclineBtn = document.getElementById('tabDeclineBtn');
+            const acceptPanel = document.getElementById('rsvpAcceptPanel');
+            const declinePanel = document.getElementById('rsvpDeclinePanel');
+
+            if (tab === 'accept') {
+                tabAcceptBtn.className = "flex-1 py-3 px-3 sm:px-4 rounded-xl font-cinzel text-xs sm:text-sm uppercase tracking-wider font-bold transition-all duration-300 flex items-center justify-center gap-2 bg-gradient-to-r from-maroon-900 via-maroon-800 to-maroon-900 text-gold-200 shadow-md border border-gold-400/60";
+                const acceptIcon = tabAcceptBtn.querySelector('i');
+                if (acceptIcon) acceptIcon.className = "fa-solid fa-heart text-gold-300";
+
+                tabDeclineBtn.className = "flex-1 py-3 px-3 sm:px-4 rounded-xl font-cinzel text-xs sm:text-sm uppercase tracking-wider font-bold transition-all duration-300 flex items-center justify-center gap-2 text-stone-600 hover:text-maroon-900 hover:bg-gold-50/60";
+                const declineIcon = tabDeclineBtn.querySelector('i');
+                if (declineIcon) declineIcon.className = "fa-regular fa-envelope-open text-stone-400";
+
+                acceptPanel.classList.remove('hidden');
+                declinePanel.classList.add('hidden');
+            } else {
+                tabDeclineBtn.className = "flex-1 py-3 px-4 rounded-xl font-cinzel text-xs sm:text-sm uppercase tracking-wider font-bold transition-all duration-300 flex items-center justify-center gap-2 bg-gradient-to-r from-maroon-900 via-maroon-800 to-maroon-900 text-gold-200 shadow-md border border-gold-400/60";
+                const declineIcon = tabDeclineBtn.querySelector('i');
+                if (declineIcon) declineIcon.className = "fa-solid fa-envelope-open text-gold-300";
+
+                tabAcceptBtn.className = "flex-1 py-3 px-4 rounded-xl font-cinzel text-xs sm:text-sm uppercase tracking-wider font-bold transition-all duration-300 flex items-center justify-center gap-2 text-stone-600 hover:text-maroon-900 hover:bg-gold-50/60";
+                const acceptIcon = tabAcceptBtn.querySelector('i');
+                if (acceptIcon) acceptIcon.className = "fa-regular fa-heart text-stone-400";
+
+                declinePanel.classList.remove('hidden');
+                acceptPanel.classList.add('hidden');
+            }
+        }
+
+        // ──────────────────────────────────────────────────────────
+        // GOOGLE FORMS INTEGRATION
+        // ──────────────────────────────────────────────────────────
+        // HOW TO SET UP (takes 3 minutes):
+        //
+        // 1. Create a Google Form at https://forms.google.com
+        //    with these 6 fields (all "Short answer"):
+        //      • Response Type
+        //      • Guest Name
+        //      • Phone / Contact
+        //      • Number of Guests
+        //      • Ceremonies Attending
+        //      • Wishes & Blessings
+        //
+        // 2. Click the ⋮ menu → "Get pre-filled link" → fill dummy
+        //    data → "Get link". The URL will contain entry.XXXXXXX
+        //    for each field. Map them below.
+        //
+        // 3. Replace GOOGLE_FORM_ACTION_URL with your form's action
+        //    URL (the part before /viewform, plus /formResponse).
+        //    Example: https://docs.google.com/forms/d/e/1FAIpQL.../formResponse
+        //
+        // 4. Replace each entry.XXXXXXX below with your actual
+        //    entry IDs from the pre-filled link.
+        // ──────────────────────────────────────────────────────────
+
+        const GOOGLE_FORM_ACTION_URL = ''; // ← PASTE YOUR FORM ACTION URL HERE
+
+        // Entry IDs — replace with your actual Google Form entry IDs
+        const FORM_ENTRY_IDS = {
+            responseType:  'entry.XXXXXXX1',  // "Accept" or "Decline"
+            guestName:     'entry.XXXXXXX2',  // Guest Name(s)
+            phoneContact:  'entry.XXXXXXX3',  // Phone / WhatsApp / Email
+            guestCount:    'entry.XXXXXXX4',  // Number of Guests
+            ceremonies:    'entry.XXXXXXX5',  // Ceremonies Attending
+            wishes:        'entry.XXXXXXX6',  // Wishes & Blessings
+        };
+
+        // Submit data to Google Forms in the background (no-cors POST)
+        function submitToGoogleForm(data) {
+            if (!GOOGLE_FORM_ACTION_URL) {
+                console.warn('[RSVP] Google Form URL not configured. Skipping remote submission.');
+                return;
+            }
+            const formData = new URLSearchParams();
+            formData.append(FORM_ENTRY_IDS.responseType, data.responseType || '');
+            formData.append(FORM_ENTRY_IDS.guestName,    data.guestName    || '');
+            formData.append(FORM_ENTRY_IDS.phoneContact, data.phoneContact || '');
+            formData.append(FORM_ENTRY_IDS.guestCount,   data.guestCount   || '');
+            formData.append(FORM_ENTRY_IDS.ceremonies,   data.ceremonies   || '');
+            formData.append(FORM_ENTRY_IDS.wishes,       data.wishes       || '');
+
+            fetch(GOOGLE_FORM_ACTION_URL, {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: formData.toString()
+            }).then(() => {
+                console.log('[RSVP] Submitted to Google Forms successfully.');
+            }).catch(err => {
+                console.warn('[RSVP] Google Forms submission error (will still show success to guest):', err);
+            });
+        }
+
+        // RSVP Joyfully Accepts Submission handler
+        function handleAcceptSubmit(e) {
+            e.preventDefault();
+            const name = document.getElementById('guestName').value;
+            const phone = document.getElementById('guestPhone').value;
+            const guestCount = document.getElementById('guestCount').value;
+
+            // Gather checked ceremonies
+            const checkedCeremonies = [];
+            document.querySelectorAll('#acceptRsvpForm input[name="events"]:checked').forEach(cb => {
+                checkedCeremonies.push(cb.value);
+            });
+            const wishes = document.getElementById('guestWishes').value;
+
+            // Submit to Google Forms
+            submitToGoogleForm({
+                responseType: 'Joyfully Accepts',
+                guestName: name,
+                phoneContact: phone,
+                guestCount: guestCount,
+                ceremonies: checkedCeremonies.join(', '),
+                wishes: wishes
+            });
+
+            const form = document.getElementById('acceptRsvpForm');
+            const successBox = document.getElementById('rsvpSuccessMsg');
+            const confirmText = document.getElementById('confirmationText');
+
+            confirmText.innerText = `Namaste ${name}! We have saved your confirmation for ${guestCount} guest(s). Looking forward to celebrating with you at Corbett Adventure Resort!`;
+
+            form.classList.add('hidden');
+            successBox.classList.remove('hidden');
+        }
+
+        // RSVP Regretfully Declines Submission handler
+        function handleDeclineSubmit(e) {
+            e.preventDefault();
+            const name = document.getElementById('declineGuestName').value;
+            const contact = document.getElementById('declineGuestContact').value;
+            const wishes = document.getElementById('declineGuestWishes').value;
+
+            // Submit to Google Forms
+            submitToGoogleForm({
+                responseType: 'Regretfully Declines',
+                guestName: name,
+                phoneContact: contact,
+                guestCount: '0',
+                ceremonies: 'N/A — Unable to attend',
+                wishes: wishes
+            });
+
+            const form = document.getElementById('declineRsvpForm');
+            const successBox = document.getElementById('rsvpDeclineSuccessMsg');
+            const confirmText = document.getElementById('declineConfirmationText');
+
+            confirmText.innerText = `Namaste ${name}. We will dearly miss your presence at Jim Corbett, but we are deeply grateful for your warm wishes and blessings as we embark on this sacred journey together!`;
+
+            form.classList.add('hidden');
+            successBox.classList.remove('hidden');
+        }
+
+        // Reset RSVP Forms to allow resubmission or correction
+        function resetRsvpForm() {
+            const acceptForm = document.getElementById('acceptRsvpForm');
+            const declineForm = document.getElementById('declineRsvpForm');
+            const acceptSuccess = document.getElementById('rsvpSuccessMsg');
+            const declineSuccess = document.getElementById('rsvpDeclineSuccessMsg');
+
+            if (acceptForm) {
+                acceptForm.reset();
+                acceptForm.classList.remove('hidden');
+            }
+            if (declineForm) {
+                declineForm.reset();
+                declineForm.classList.remove('hidden');
+            }
+            if (acceptSuccess) acceptSuccess.classList.add('hidden');
+            if (declineSuccess) declineSuccess.classList.add('hidden');
+        }
+
+        // Web Audio API: Festive Classical Indian Ambient Harmony (Raag Bhupali notes: C, D, E, G, A)
+        let audioCtx = null;
+        let isPlaying = false;
+        let audioContextStarted = false;
+        let melodyInterval = null;
+
+        const bhupaliNotes = [261.63, 293.66, 329.63, 392.00, 440.00, 523.25]; // C4, D4, E4, G4, A4, C5
+
+        function playTanpuraDrone(freq) {
+            if (!audioCtx) return;
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+
+            osc.type = 'triangle';
+            osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+
+            gain.gain.setValueAtTime(0.015, audioCtx.currentTime);
+
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            osc.start();
+        }
+
+        function playSitarPluck() {
+            if (!audioCtx || !isPlaying) return;
+            const note = bhupaliNotes[Math.floor(Math.random() * bhupaliNotes.length)];
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(note, audioCtx.currentTime);
+
+            // Envelope pluck
+            gain.gain.setValueAtTime(0.001, audioCtx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.08, audioCtx.currentTime + 0.05);
+            gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 1.8);
+
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+
+            osc.start();
+            osc.stop(audioCtx.currentTime + 1.9);
+        }
+
+        function toggleAmbience() {
+            if (!audioCtx) {
+                const AudioContext = window.AudioContext || window.webkitAudioContext;
+                audioCtx = new AudioContext();
+            }
+
+            if (audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+
+            const btnText = document.getElementById('musicText');
+            const btnIcon = document.getElementById('musicIcon');
+            const viz = document.getElementById('musicVisualizer');
+
+            if (!isPlaying) {
+                isPlaying = true;
+                audioContextStarted = true;
+                btnText.innerText = "Mute Shehnai";
+                btnIcon.innerHTML = `<i class="fa-solid fa-volume-high text-gold-300 animate-pulse"></i>`;
+                if (viz) {
+                    viz.classList.remove('hidden');
+                    viz.classList.add('inline-flex');
+                }
+
+                // Continuous peaceful drone (Sa and Pa)
+                playTanpuraDrone(130.81); // C3
+                playTanpuraDrone(196.00); // G3
+
+                // Plucking melody
+                playSitarPluck();
+                melodyInterval = setInterval(playSitarPluck, 1200);
+            } else {
+                isPlaying = false;
+                if (melodyInterval) clearInterval(melodyInterval);
+                if (audioCtx) audioCtx.suspend();
+                btnText.innerText = "Play Shehnai";
+                btnIcon.innerHTML = `<i class="fa-solid fa-music text-gold-300"></i>`;
+                if (viz) {
+                    viz.classList.add('hidden');
+                    viz.classList.remove('inline-flex');
+                }
+            }
+        }
+
+        // Wedding Calendar Events Registry (Times in UTC for IST +05:30)
+        const weddingEvents = {
+            full: {
+                title: "Shalini & Abhinandan | Royal Wedding Celebration",
+                desc: "Two-day sacred destination wedding celebration of Shalini & Abhinandan at Jim Corbett. Celebrations include Haldi & Mehendi, Sangeet & Cocktails, and Saat Phere.",
+                loc: "Corbett Adventure Resort, Ramnagar-Nainital Road, Village Bailparao, Uttarakhand 263139",
+                start: "20270215T043000Z", // Feb 15, 2027 10:00 AM IST
+                end: "20270216T180000Z"    // Feb 16, 2027 11:30 PM IST
+            },
+            haldi: {
+                title: "Shalini & Abhinandan | Haldi & Mehendi",
+                desc: "Auspicious yellow hues, fresh florals, henna fragrance, poolside music & celebratory vibes.",
+                loc: "Garden Lawns, Corbett Adventure Resort, Ramnagar, Uttarakhand",
+                start: "20270215T043000Z", // Feb 15, 2027 10:00 AM IST
+                end: "20270215T083000Z"    // Feb 15, 2027 2:00 PM IST
+            },
+            sangeet: {
+                title: "Shalini & Abhinandan | Sangeet & Cocktails",
+                desc: "Beats, glamour, Indo-western sparkle, evening feast & DJ beats.",
+                loc: "Grand Courtyard, Corbett Adventure Resort, Ramnagar, Uttarakhand",
+                start: "20270215T123000Z", // Feb 15, 2027 6:00 PM IST
+                end: "20270215T180000Z"    // Feb 15, 2027 11:30 PM IST
+            },
+            wedding: {
+                title: "Shalini & Abhinandan | The Wedding (Varmala & Saat Phere)",
+                desc: "Auspicious Varmala, sacred Saat Phere around the sacred Agni, followed by royal wedding dinner.",
+                loc: "Royal Mandap, Corbett Adventure Resort, Ramnagar, Uttarakhand",
+                start: "20270216T103000Z", // Feb 16, 2027 4:00 PM IST
+                end: "20270216T173000Z"    // Feb 16, 2027 11:00 PM IST
+            }
+        };
+
+        let currentCalEvent = weddingEvents.full;
+
+        function addToCalendar(type) {
+            currentCalEvent = weddingEvents[type] || weddingEvents.full;
+            const modal = document.getElementById('calendarModal');
+            const titleEl = document.getElementById('calModalTitle');
+            if (titleEl) titleEl.innerText = currentCalEvent.title;
+            if (modal) {
+                modal.classList.remove('hidden');
+                modal.classList.add('flex');
+            }
+        }
+
+        function closeCalendarModal() {
+            const modal = document.getElementById('calendarModal');
+            if (modal) {
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+            }
+        }
+
+        function executeGoogleCal() {
+            const ev = currentCalEvent;
+            const url = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(ev.title)}&details=${encodeURIComponent(ev.desc)}&location=${encodeURIComponent(ev.loc)}&dates=${ev.start}/${ev.end}`;
+            window.open(url, '_blank');
+            closeCalendarModal();
+        }
+
+        function executeIcsCal() {
+            const ev = currentCalEvent;
+            const icsData = [
+                "BEGIN:VCALENDAR",
+                "VERSION:2.0",
+                "PRODID:-//Shalini and Abhinandan Wedding//EN",
+                "CALSCALE:GREGORIAN",
+                "METHOD:PUBLISH",
+                "BEGIN:VEVENT",
+                `SUMMARY:${ev.title}`,
+                `DESCRIPTION:${ev.desc}`,
+                `LOCATION:${ev.loc}`,
+                `DTSTART:${ev.start}`,
+                `DTEND:${ev.end}`,
+                "STATUS:CONFIRMED",
+                "END:VEVENT",
+                "END:VCALENDAR"
+            ].join("\r\n");
+
+            const blob = new Blob([icsData], { type: "text/calendar;charset=utf-8" });
+            const link = document.createElement("a");
+            link.href = window.URL.createObjectURL(blob);
+            link.setAttribute("download", `${ev.title.replace(/[^a-zA-Z0-9]/g, "_")}.ics`);
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            closeCalendarModal();
+        }
+
+        // Copy Wedding Hashtag
+        function copyHashtag() {
+            navigator.clipboard.writeText("#ShaliniWedsAbhinandan").then(() => {
+                const toast = document.getElementById('hashtagToast');
+                if (toast) {
+                    toast.classList.remove('opacity-0', 'pointer-events-none');
+                    setTimeout(() => {
+                        toast.classList.add('opacity-0', 'pointer-events-none');
+                    }, 2500);
+                }
+            });
+        }
+
+        // Photo Lightbox Modal
+        function openLightbox(src, caption) {
+            const modal = document.getElementById('photoLightbox');
+            const img = document.getElementById('lightboxImg');
+            const cap = document.getElementById('lightboxCaption');
+            if (img) img.src = src;
+            if (cap) cap.innerText = caption || '';
+            if (modal) {
+                modal.classList.remove('hidden');
+                modal.classList.add('flex');
+            }
+        }
+
+        function closeLightbox() {
+            const modal = document.getElementById('photoLightbox');
+            if (modal) {
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+            }
+        }
+
+        // PUSHPAVRISHTI (Festive Rose & Marigold Petal Shower Canvas)
+        let petalsCanvas, petalsCtx;
+        let petals = [];
+        let petalsActive = true;
+        let animationFrameId = null;
+
+        class Petal {
+            constructor() {
+                this.reset(true);
+            }
+
+            reset(initial = false) {
+                if (!petalsCanvas) return;
+                this.x = Math.random() * petalsCanvas.width;
+                this.y = initial ? Math.random() * petalsCanvas.height : -25;
+                this.size = Math.random() * 11 + 9;
+                this.speedY = Math.random() * 1.3 + 0.7;
+                this.speedX = Math.random() * 1.0 - 0.5;
+                this.rotation = Math.random() * 360;
+                this.rotationSpeed = Math.random() * 1.8 - 0.9;
+                this.oscillationSpeed = Math.random() * 0.02 + 0.01;
+                this.angle = Math.random() * Math.PI * 2;
+                this.isMarigold = Math.random() > 0.5;
+                this.opacity = Math.random() * 0.35 + 0.55;
+            }
+
+            update() {
+                this.y += this.speedY;
+                this.angle += this.oscillationSpeed;
+                this.x += Math.sin(this.angle) * 0.7 + this.speedX;
+                this.rotation += this.rotationSpeed;
+
+                if (this.y > petalsCanvas.height + 25 || this.x < -30 || this.x > petalsCanvas.width + 30) {
+                    this.reset(false);
+                }
+            }
+
+            draw() {
+                petalsCtx.save();
+                petalsCtx.translate(this.x, this.y);
+                petalsCtx.rotate((this.rotation * Math.PI) / 180);
+                petalsCtx.globalAlpha = this.opacity;
+
+                if (this.isMarigold) {
+                    // Golden Saffron Marigold petal
+                    petalsCtx.fillStyle = '#E5A93C';
+                    petalsCtx.beginPath();
+                    petalsCtx.ellipse(0, 0, this.size * 0.45, this.size * 0.85, 0, 0, Math.PI * 2);
+                    petalsCtx.fill();
+                    petalsCtx.fillStyle = '#F5C968';
+                    petalsCtx.beginPath();
+                    petalsCtx.ellipse(0, 0, this.size * 0.25, this.size * 0.55, 0, 0, Math.PI * 2);
+                    petalsCtx.fill();
+                } else {
+                    // Soft Ruby Rose petal
+                    petalsCtx.fillStyle = '#C84B61';
+                    petalsCtx.beginPath();
+                    petalsCtx.ellipse(0, 0, this.size * 0.55, this.size * 0.8, 0, 0, Math.PI * 2);
+                    petalsCtx.fill();
+                    petalsCtx.fillStyle = '#E37A8C';
+                    petalsCtx.beginPath();
+                    petalsCtx.ellipse(0, -this.size * 0.15, this.size * 0.35, this.size * 0.5, 0, 0, Math.PI * 2);
+                    petalsCtx.fill();
+                }
+
+                petalsCtx.restore();
+            }
+        }
+
+        function initPetals() {
+            petalsCanvas = document.getElementById('petalsCanvas');
+            if (!petalsCanvas) return;
+            petalsCtx = petalsCanvas.getContext('2d');
+            resizePetalsCanvas();
+            window.addEventListener('resize', resizePetalsCanvas);
+
+            petals = [];
+            for (let i = 0; i < 25; i++) {
+                petals.push(new Petal());
+            }
+            animatePetals();
+        }
+
+        function resizePetalsCanvas() {
+            if (!petalsCanvas) return;
+            petalsCanvas.width = window.innerWidth;
+            petalsCanvas.height = window.innerHeight;
+        }
+
+        function animatePetals() {
+            if (!petalsActive || !petalsCtx || !petalsCanvas) return;
+            petalsCtx.clearRect(0, 0, petalsCanvas.width, petalsCanvas.height);
+            for (let petal of petals) {
+                petal.update();
+                petal.draw();
+            }
+            animationFrameId = requestAnimationFrame(animatePetals);
+        }
+
+        function togglePetals() {
+            petalsActive = !petalsActive;
+            const btn = document.getElementById('petalsToggleBtn');
+            if (petalsActive) {
+                if (btn) btn.classList.remove('opacity-90');
+                animatePetals();
+            } else {
+                if (petalsCtx && petalsCanvas) petalsCtx.clearRect(0, 0, petalsCanvas.width, petalsCanvas.height);
+                if (animationFrameId) cancelAnimationFrame(animationFrameId);
+                if (btn) btn.classList.add('opacity-50');
+            }
+        }
+    </script>
+</body>
+
+</html>
