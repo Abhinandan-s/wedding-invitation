@@ -296,8 +296,7 @@
                     <div class="arch-frame overflow-hidden w-full h-[440px] sm:h-[480px] bg-stone-100 cursor-pointer"
                         onclick="openLightbox('images/couple-hero.jpeg', 'Shalini Sharma & Abhinandan Singh • Forever Begins Here')"
                         title="Click to view photograph">
-                        <img src="images/couple-hero.jpeg"
-                            alt="Shalini Sharma and Abhinandan Singh"
+                        <img src="images/couple-hero.jpeg" alt="Shalini Sharma and Abhinandan Singh"
                             class="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700"
                             onerror="this.src='https://placehold.co/600x800/142742/E5C158?text=Shalini+%26+Abhinandan'" />
                     </div>
@@ -417,8 +416,7 @@
                 <div class="relative bg-white p-3 rounded-2xl border border-gold-300 shadow-xl overflow-hidden cursor-pointer"
                     onclick="openLightbox('images/couple-story.jpeg', 'Shalini & Abhinandan • Together in laughter, dance, and a lifetime of love')"
                     title="Click to view photograph">
-                    <img src="images/couple-story.jpeg"
-                        alt="Shalini and Abhinandan joyful moment" class="zoom-img"
+                    <img src="images/couple-story.jpeg" alt="Shalini and Abhinandan joyful moment" class="zoom-img"
                         onerror="this.src='https://placehold.co/600x750/1E3A60/FFF2B2?text=Shalini+%26+Abhinandan'" />
                     <div class="p-3 text-center">
                         <p class="font-cormorant italic text-lg text-stone-700">“Together in laughter, dance, and a
@@ -935,7 +933,7 @@
                 </div>
 
                 <!-- CARD 4: JUNGLE SAFARI TIPS -->
-                <div
+                <!-- <div
                     class="bg-white p-6 rounded-2xl border border-gold-300/80 shadow-md hover:shadow-xl transition-all duration-300 flex flex-col justify-between">
                     <div>
                         <div
@@ -953,7 +951,7 @@
                         <strong>Safari Note:</strong> Open gypsies at 6:00 AM are very cold. Pack heavy woolens, gloves
                         & neutral earthy clothing.
                     </div>
-                </div>
+                </div> -->
             </div>
 
             <!-- Hospitality Helpdesk Banner -->
@@ -972,11 +970,11 @@
                     </div>
                 </div>
                 <div class="flex flex-wrap items-center gap-3">
-                    <a href="tel:+919876543210"
+                    <a href="tel:+917903594860"
                         class="px-5 py-2.5 rounded-full bg-maroon-900 text-gold-200 border border-gold-400 text-xs font-cinzel uppercase tracking-wider font-bold hover:bg-maroon-800 transition flex items-center gap-2 shadow-sm">
                         <i class="fa-solid fa-phone text-gold-400"></i> Call Concierge
                     </a>
-                    <a href="https://api.whatsapp.com/send?phone=919876543210&text=Namaste!%20I%20am%20a%20guest%20for%20Shalini%20%26%20Abhinandan%27s%20wedding%20and%20need%20assistance."
+                    <a href="https://api.whatsapp.com/send?phone=917903594860&text=Namaste!%20I%20am%20a%20guest%20for%20Shalini%20%26%20Abhinandan%27s%20wedding%20and%20need%20assistance."
                         target="_blank" rel="noopener noreferrer"
                         class="px-5 py-2.5 rounded-full bg-[#25D366] text-white text-xs font-cinzel uppercase tracking-wider font-bold hover:bg-[#1ebd5a] transition flex items-center gap-2 shadow-sm">
                         <i class="fa-brands fa-whatsapp text-sm"></i> WhatsApp Desk
@@ -1012,7 +1010,7 @@
                     <i class="fa-brands fa-whatsapp text-emerald-600 text-xl"></i>
                     <span>Prefer replying directly via WhatsApp?</span>
                 </div>
-                <a href="https://api.whatsapp.com/send?phone=919876543210&text=Namaste!%20I%20would%20like%20to%20confirm%20my%20RSVP%20for%20Shalini%20%26%20Abhinandan%27s%20Wedding."
+                <a href="https://api.whatsapp.com/send?phone=917903594860&text=Namaste!%20I%20would%20like%20to%20confirm%20my%20RSVP%20for%20Shalini%20%26%20Abhinandan%27s%20Wedding."
                     target="_blank" rel="noopener noreferrer"
                     class="px-4 py-2 rounded-full bg-emerald-600 text-white font-semibold hover:bg-emerald-700 transition flex items-center gap-1.5 text-xs shrink-0 shadow-sm">
                     <span>Quick RSVP on WhatsApp</span>
@@ -1408,12 +1406,12 @@
 
         // Entry IDs mapped from your Google Form
         const FORM_ENTRY_IDS = {
-            responseType:  'entry.1790899392',  // "Joyfully Accepts" or "Regretfully Declines"
-            guestName:     'entry.962923100',   // Guest Name(s)
-            phoneContact:  'entry.1694245333',  // Phone / WhatsApp / Email
-            guestCount:    'entry.1970152707',  // Number of Guests
-            ceremonies:    'entry.381899336',   // Ceremonies Attending
-            wishes:        'entry.824669284',   // Wishes & Blessings
+            responseType: 'entry.1790899392',  // "Joyfully Accepts" or "Regretfully Declines"
+            guestName: 'entry.962923100',   // Guest Name(s)
+            phoneContact: 'entry.1694245333',  // Phone / WhatsApp / Email
+            guestCount: 'entry.1970152707',  // Number of Guests
+            ceremonies: 'entry.381899336',   // Ceremonies Attending
+            wishes: 'entry.824669284',   // Wishes & Blessings
         };
 
         // Submit data to Google Forms in the background (no-cors POST)
@@ -1424,11 +1422,11 @@
             }
             const formData = new URLSearchParams();
             formData.append(FORM_ENTRY_IDS.responseType, data.responseType || '');
-            formData.append(FORM_ENTRY_IDS.guestName,    data.guestName    || '');
+            formData.append(FORM_ENTRY_IDS.guestName, data.guestName || '');
             formData.append(FORM_ENTRY_IDS.phoneContact, data.phoneContact || '');
-            formData.append(FORM_ENTRY_IDS.guestCount,   data.guestCount   || '');
-            formData.append(FORM_ENTRY_IDS.ceremonies,   data.ceremonies   || '');
-            formData.append(FORM_ENTRY_IDS.wishes,       data.wishes       || '');
+            formData.append(FORM_ENTRY_IDS.guestCount, data.guestCount || '');
+            formData.append(FORM_ENTRY_IDS.ceremonies, data.ceremonies || '');
+            formData.append(FORM_ENTRY_IDS.wishes, data.wishes || '');
 
             fetch(GOOGLE_FORM_ACTION_URL, {
                 method: 'POST',
